@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Ceny złota z Narodowego Banku Polskiego">
+        <meta name="keywords" content="Narodowy Bank Polski, NBP">
+        <meta name="author" content="Wiktor Wojtanowski">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>NBP</title>
+
+        <style>
+            table, tr td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="zloto">
+            <tr>
+                <td>Cena złota</td>
+                <td>Data</td>
+            </tr>
+        </table>
+
+        <script type="text/javascript">
+            fetch('http://api.nbp.pl/api/cenyzlota/last/10?format=json')
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+
+                    for (let i = 0; i < response.length; i++) {
+                        let pricegold = response[i]
+                        document.getElementById("zloto").innerHTML += "<tr><td>" + pricegold.cena 
+                            + "</td><td>" + pricegold.data + "</td></tr>"
+                    }
+                })
+                .catch(err => console.error(err))
+        </script>
+    </body>
+</html>
